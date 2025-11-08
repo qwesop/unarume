@@ -1,5 +1,4 @@
 require('dotenv').config();
-require('./logger.js');
 const { Routes, REST, Client, IntentsBitField, userMention, EmbedBuilder } = require('discord.js');
 const { CommandHandler } = require('djs-commander');
 const mongoose = require('mongoose');
@@ -17,8 +16,8 @@ const client = new Client({
     ],
 });
 
-client.on('ready', (c) => {
-    console.log(`%c${c.user.tag} is online:)`, 'color: aqua'); //누가봐도 봇 시작시 로그
+client.on('clientReady', (c) => {
+    console.log(`${c.user.tag}가 활동을 시작했어요!`); //누가봐도 봇 시작시 로그
     /**rest.delete(Routes.applicationCommand('1172826374139039805', 'commandid'))
 	.then(() => console.log('Successfully deleted application command'))
 	.catch(console.error);*/
@@ -37,10 +36,10 @@ client.on('messageCreate', async (message) => {
         const foundmsg = await NormalMessage.findOne({ inputmsg: msg });
 
         if (foundmsg !== null) {
-            console.log(`${message.author.username}(${message.author.id})님이 '${msg}'(이)라고 저에게 말했어요.`)
+            console.log(`${message.author.username}(${message.author.id})님이 ${msg}라고 저에게 말했어요.`)
             await message.channel.send(foundmsg.response);
         } else {
-            console.log(`${message.author.username}(${message.author.id})님이 '${msg}'(이)라고 저에게 말했는데, 저는 그걸 모르는데 어떡하죠...`)
+            console.log(`${message.author.username}(${message.author.id})님이 ${msg}라고 저에게 말했는데, 저는 그걸 모르는데 어떡하죠...`)
             await message.channel.send('...?\n-# 우나르메가 알아듣지 못한 것 같다. (우나르메가 아직 배우지 못한 말이에요.)')
         }
     }
@@ -59,4 +58,6 @@ mongoose.connect(process.env.MONGODB_URI).then(() => { //db연결, 봇 로그인
     console.log('connected database');
 }); 
 
-module.exports = {};
+module.exports = { client };
+
+require('./logger.js');
