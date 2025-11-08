@@ -27,17 +27,19 @@ client.on('ready', (c) => {
 // 메시지 올라온 거 감지
 client.on('messageCreate', async (message) => {
     if (message.author.id === client.user.id) return;
-    if (message.content.startsWith('우나르메야')) {
-        const msg = message.content.slice(5).trim();
+
+	const prefix = '우나르메야 ';
+    if (message.content.startsWith(prefix)) {
+        const msg = message.content.substring(prefix.length).trim();
 
         // 답변 찾기
         const foundmsg = await NormalMessage.findOne({ inputmsg: msg });
 
         if (foundmsg !== null) {
-            console.log(`${client.user.username}(${message.author.id})님이 ${msg}라고 저에게 말했어요.`)
+            console.log(`${message.author.username}(${message.author.id})님이 ${msg}라고 저에게 말했어요.`)
             await message.channel.send(foundmsg.response);
         } else {
-            console.log(`${client.user.username}(${message.author.id})님이 ${msg}라고 저에게 말했는데, 저는 그걸 모르는데 어떡하죠...`)
+            console.log(`${message.author.username}(${message.author.id})님이 ${msg}라고 저에게 말했는데, 저는 그걸 모르는데 어떡하죠...`)
             await message.channel.send('...?\n-# 우나르메가 알아듣지 못한 것 같다. (우나르메가 아직 배우지 못한 말이에요.)')
         }
     }
