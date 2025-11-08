@@ -29,7 +29,7 @@ client.on('ready', (c) => {
 client.on('messageCreate', async (message) => {
     if (message.author.id === client.user.id) return;
 
-	const prefix = '우나르메야 ';
+	const prefix = '우나르메야';
     if (message.content.startsWith(prefix)) {
         const msg = message.content.substring(prefix.length).trim();
 
