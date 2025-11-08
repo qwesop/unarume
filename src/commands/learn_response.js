@@ -31,10 +31,10 @@ async function run({ interaction }) {
             normalMessage
                 .save()
                 .then(() => {
-                    console.log(`${username}(${userId})님이 '${input}'을 '${response}'(이)라고 가르쳤어요.`);
-                    interaction.followUp(`'${input}'은 '${response}'라고 말하면 되는 거군요, 잘 알겠어요!`);
+                    console.log(`${username}(${userId})님이 '${input}'을(를) '${response}'(이)라고 가르쳤어요.`);
+                    interaction.followUp(`'${input}'은 '${response}'(이)라고 말하면 되는 거군요, 잘 알겠어요!`);
                 }).catch((e) => {
-                    console.log(`${username}(${userId})님이 '${input}'을 '${response}'(이)라고 알려준 걸 배우는 과정에서 오류가 발생했어요...`, e);
+                    console.log(`${username}(${userId})님이 '${input}'을(를) '${response}'(이)라고 알려준 걸 배우는 과정에서 오류가 발생했어요...`, e);
                     interaction.followUp(`으앙... 알려주신 내용이 머릿속에 들어가지 않아요...`);
                 });
 
