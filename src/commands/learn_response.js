@@ -13,7 +13,7 @@ async function run({ interaction }) {
             });
 
             if (duplicateExist) {
-                console.log(`${username}(${userId})님이 ${input}을 ${response}라고 가르치려고 했으나 우나르메는 이미 그 단어를 배웠어요.`);
+                console.log(`${username}(${userId})님이 '${input}'을 '${response}'(이)라고 가르치려고 했으나 우나르메는 이미 그 단어를 배웠어요.`);
                 return interaction.followUp('저... 그거, 이미 아는데요?.\n-# (자신이 가르친 단어라면 지우고 다시 시도해주세요.)');
             }
 
@@ -31,10 +31,10 @@ async function run({ interaction }) {
             normalMessage
                 .save()
                 .then(() => {
-                    console.log(`${username}(${userId})님이 ${input}을 ${response}라고 가르쳤어요.`);
+                    console.log(`${username}(${userId})님이 '${input}'을 '${response}'(이)라고 가르쳤어요.`);
                     interaction.followUp(`'${input}'은 '${response}'라고 말하면 되는 거군요, 잘 알겠어요!`);
                 }).catch((e) => {
-                    console.log(`${username}(${userId})님이 ${input}을 ${response}라고 알려준 걸 배우는 과정에서 오류가 발생했어요...`, e);
+                    console.log(`${username}(${userId})님이 '${input}'을 '${response}'(이)라고 알려준 걸 배우는 과정에서 오류가 발생했어요...`, e);
                     interaction.followUp(`으앙... 알려주신 내용이 머릿속에 들어가지 않아요...`);
                 });
 
