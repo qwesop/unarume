@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('./logger.js');
 const { Routes, REST, Client, IntentsBitField, userMention, EmbedBuilder } = require('discord.js');
 const { CommandHandler } = require('djs-commander');
 const mongoose = require('mongoose');
