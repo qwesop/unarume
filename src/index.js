@@ -36,10 +36,10 @@ client.on('messageCreate', async (message) => {
         const foundmsg = await NormalMessage.findOne({ inputmsg: msg });
 
         if (foundmsg !== null) {
-            console.log(`${message.author.username}(${message.author.id})님이 ${msg}라고 저에게 말했어요.`)
+            console.log(`${message.author.username}(${message.author.id})님이 '${msg}'(이)라고 저에게 말했어요.`)
             await message.channel.send(foundmsg.response);
         } else {
-            console.log(`${message.author.username}(${message.author.id})님이 ${msg}라고 저에게 말했는데, 저는 그걸 모르는데 어떡하죠...`)
+            console.log(`${message.author.username}(${message.author.id})님이 '${msg}'(이)라고 저에게 말했는데, 저는 그걸 모르는데 어떡하죠...`)
             await message.channel.send('...?\n-# 우나르메가 알아듣지 못한 것 같다. (우나르메가 아직 배우지 못한 말이에요.)')
         }
     }
