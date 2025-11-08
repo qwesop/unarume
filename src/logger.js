@@ -1,26 +1,21 @@
-const fs = require('fs');
-const logs = [];
+require('dotenv').config();
+const { client } = require('./index.js');
 
-const originalLog = console.log;
-console.log = (...args) => {
-  const message = args.join(' ');
-  logs.push(message);
-  originalLog(...args);
-};
+const logChannelId = process.env.LOGGING_CHANNEL;
 
-const saveLogs = () => {
-  if (logs.length > 0) {
-    try {
-      fs.writeFileSync('bot-logs.txt', logs.join('\n'), 'utf-8');
-      console.log('로그 저장 완료.');
-    } catch (err) {
-      console.error('로그 저장 실패:', err);
-    }
+const sendLog = async (message) => {
+  try {
+    const channel = await client.channels.fetch(logChannelId);
+    if (!channel) return console.error('로깅할 채널을 찾을 수 없어요...');
+    await channel.send(`${message}`);
+  } catch (e) {
+    console.error('로그를 전송하는 도중 오류가 발생해 버렸어요...', e);
   }
 };
 
-process.on('exit', saveLogs);
-process.on('SIGINT', () => process.exit());
-process.on('SIGTERM', () => process.exit());
-
-module.exports = {}; // 필요 시 다른 파일에서 require 가능
+const originalLog = console.log;
+console.log = (...args) => {
+  const msg = args.join(' ');
+  originalLog(...args);
+  sendLog(msg);
+};
