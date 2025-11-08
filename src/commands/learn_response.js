@@ -3,11 +3,11 @@ const NormalMessage = require("../models/NormalMessage.js");
 
 async function run({ interaction }) {
     try {
-        await interaction.deferReply({ ephemeral: true });
+        await interaction.deferReply({ ephemeral: false });
             const userId = interaction.user.id;
             const input = interaction.options.getString('input');
-            const response = interaction.option.getString('response');
-            const username = await client.users.fetch(userId)
+            const response = interaction.options.getString('response');
+            const username = await interaction.user.username;
             const duplicateExist = await NormalMessage.exists({
                 inputmsg: input
             });
@@ -30,7 +30,7 @@ async function run({ interaction }) {
 
             normalMessage
                 .save()
-                .than(() => {
+                .then(() => {
                     console.log(`${username}(${userId})님이 ${input}을 ${response}라고 가르쳤어요.`);
                     interaction.followUp(`'${input}'은 '${response}'라고 말하면 되는 거군요, 잘 알겠어요!`);
                 }).catch((e) => {

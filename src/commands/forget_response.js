@@ -3,10 +3,10 @@ const NormalMessage = require("../models/NormalMessage.js");
 
 async function run({ interaction }) {
     try {
-        await interaction.deferReply({ ephemeral: true });
+        await interaction.deferReply({ ephemeral: false });
             const userId = interaction.user.id;
             const input = interaction.options.getString('input');
-            const username = await client.users.fetch(userId)
+            const username = await interaction.user.username;
             const findmsg = await NormalMessage.findOne({
                 inputmsg: input,
             });
@@ -24,7 +24,7 @@ async function run({ interaction }) {
                 }
 
                 NormalMessage.findOneAndDelete({ inputmsg: input })
-                    .than(() => {
+                    .then(() => {
                         console.log(`${username}(${userId})님이 ${input}을 잊게 했어요.`);
                         interaction.followUp(`'${input}'? 그런 거 저는 잘 모르겠어요...`);
                     }).catch((e) => {

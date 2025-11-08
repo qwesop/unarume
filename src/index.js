@@ -27,25 +27,28 @@ client.on('ready', (c) => {
 // 메시지 올라온 거 감지
 client.on('messageCreate', async (message) => {
     if (message.author.id === client.user.id) return;
+    if (message.content.startsWith('우나르메야')) {
+        const msg = message.content.slice(5).trim();
 
+        // 답변 찾기
+        const foundmsg = await NormalMessage.findOne({ inputmsg: msg });
+
+        if (foundmsg !== null) {
+            console.log(`${client.user.username}(${message.author.id})님이 ${msg}라고 저에게 말했어요.`)
+            await message.channel.send(foundmsg.response);
+        } else {
+            console.log(`${client.user.username}(${message.author.id})님이 ${msg}라고 저에게 말했는데, 저는 그걸 모르는데 어떡하죠...`)
+            await message.channel.send('...?\n-# 우나르메가 알아듣지 못한 것 같다. (우나르메가 아직 배우지 못한 말이에요.)')
+        }
+    }
     // TODO: 밴한 사람 답변 안해주는 로직 만들기
 
-    const msg = message.content.trim();
-
-    // 답변 찾기
-    const foundmsg = NormalMessage.findOne({ inputmsg: msg });
-
-    if (foundmsg) {
-        await message.reply(foundmsg.response);
-    } else {
-        await message.reply('...?\n-# 우나르메가 알아듣지 못한 것 같다. (우나르메가 아직 배우지 못한 말이에요.)')
-    }
 });
 
 new CommandHandler({ //../commands 폴더에 있는 커맨드들 다 등록
     client,
     commandsPath: path.join(__dirname, 'commands'),
-    eventsPath: path.join(__dirname, 'events'),
+    //eventsPath: path.join(__dirname, 'events'),
 });
 
 mongoose.connect(process.env.MONGODB_URI).then(() => { //db연결, 봇 로그인
@@ -53,6 +56,4 @@ mongoose.connect(process.env.MONGODB_URI).then(() => { //db연결, 봇 로그인
     console.log('connected database');
 }); 
 
-module.exports = {
-    getStartTime
-};
+module.exports = {};
