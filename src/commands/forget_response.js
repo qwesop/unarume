@@ -26,15 +26,15 @@ async function run({ interaction }) {
                 NormalMessage.findOneAndDelete({ inputmsg: input })
                     .then(() => {
                         console.log(`${username}(${userId})님이 '${input}'을(를) 잊게 했어요.`);
-                        interaction.followUp(`'${input}'? 그런 거 저는 잘 모르겠어요...`);
+                        interaction.followUp(`'${input}'? 그런 거 저는 잘 모르겠어요...\n-# 답변이 성공적으로 삭제되었습니다.`);
                     }).catch((e) => {
-                        console.log(`${username}(${userId})님이 '${input}'을(를) 잊으라고 했는데, 이상하게 머릿속에서 떠나지 않아요...`, e);
-                        interaction.followUp(`으앙... 어째서 머릿속에 계속 기억이 남을까요...`);
+                        console.log(`${username}(${userId})님이 '${input}'을(를) 잊으라고 했는데, 이상하게 머릿속에서 떠나지 않아요...\n-# DB에서 답변을 삭제하는 도중 문제가 발생했습니다.`, e);
+                        interaction.followUp(`으앙... 어째서 머릿속에 계속 기억이 남을까요...\n-# 답변을 삭제하는 도중 문제가 발생했습니다.`);
                     });
 
             } else {
                 console.log(`${username}(${userId})님이 '${input}'(이)라는 제가 모르는 걸 잊으라고 했어요.`);
-                return interaction.followUp('그런 건 저는 모르는데요...?\n-# 등록되지 않은 단어입니다.');
+                return interaction.followUp(`${input}...? 그런 거 처음 들어보는데요...?\n-# 등록되지 않은 단어입니다.`);
             }
 
     } catch (e) {
