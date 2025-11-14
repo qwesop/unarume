@@ -43,7 +43,7 @@ client.on('messageCreate', async (message) => {
 
             for (const sendmsg of completemsg) {
                 await new Promise(resolve => setTimeout(resolve, sendmsg.wait * 1000)); // wait 초 만큼 대기
-                const userWatermark = foundmsg.userId == '899881722559205396' ? "" : `\n-# ${user.username}님이 가르쳐 주셨어요!`;
+                const userWatermark = foundmsg.userId == process.env.ADMINID ? "" : `\n-# ${user.username}님이 가르쳐 주셨어요!`;
                 await message.channel.send(sendmsg.text + userWatermark);
             }
             console.log(`${message.author.username}(${message.author.id})님이 '${msg}'(이)라고 저에게 말했어요.`)
@@ -74,27 +74,3 @@ module.exports = { client };
 require('./logger.js');
 
 // rand(} 따구로 적은거 정수 아니라고 난리치는거 형식 오류라고 출력해주기 <- 큰 문제 아니라서 일단은 넘어감
-
-/**
- * TODO: 아래 오류 고치기
- * 
- * choice 안에서 wait로 메시지 쪼개면 이상하게 파싱되어서 출력됨
- * 
- * 예시:
- * {choice:'레몬은 레몬 4개만큼의 비타민이 있다고 해요. {wait:1} {br}근데 우나르메는 자동차에서 아이스크림을 먹다가 사장님이 잘리는 걸 봤어요. {wait:1} {br}그래서 소방서에 가서 몰로토프 칵테일 제조법을 배워서 경찰 진영에 협력했어요.'|0.3, '아무말'|0.4, '저는 사실 파일럿이 아니라 나무꾼이 되서 정의로운 도둑이 되고 싶었어요.'|0.3} {br} {wait:1.3} {mention}님 제 말 먹고 있는거 맞죠?
-
-# 니 메시지 분석
-    ## 30퍼
-        ```레몬은 레몬 4개만큼의 비타민이 있다고 해요.
-        1초 휴식 
-        근데 우나르메는 자동차에서 아이스크림을 먹다가 사장님이 잘리는 걸 봤어요. 
-        1초 휴식
-        그래서 소방서에 가서 몰로토프 칵테일 제조법을 배워서 경찰 진영에 협력했어요.```
-    ## 40퍼
-        ```아무말```
-    ## 30퍼
-        ```저는 사실 파일럿이 아니라 나무꾼이 되서 정의로운 도둑이 되고 싶었어요.```
-    # choice 탈피 후 공통메시지
-        ```1.3초 휴식
-        {mention}님 제 말 먹고 있는거 맞죠?```
- */

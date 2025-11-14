@@ -166,31 +166,36 @@ function processTags(text, mention) {
 
 // 객체 배열로 반환하는 함수
 function processDatabaseString(input, mention) {
-    // 1. {wait:x} 태그를 기준으로 문자열 분할
-    // split 정규식에 캡처 그룹()을 사용하면, 구분자(wait 시간)도 결과 배열에 포함됨
+    // 1. [변경] 먼저 {choice}, {mention} 등 {wait}를 제외한 모든 태그를 처리합니다.
+    // processTags는 {wait:x} 태그를 "알 수 없는 태그"로 간주하여 그대로 둡니다.
+    // {choice}가 먼저 평가되므로, 그 결과물(내부에 {wait}가 포함된 문자열)이 반환됩니다.
+    const fullyProcessedString = processTags(input, mention);
+
+    // 2. [변경] 모든 태그 처리가 완료된 문자열을 {wait:x} 기준으로 분할합니다.
     const waitRegex = /{wait:([0-9.]+)}/g;
-    const parts = input.split(waitRegex);
+    const parts = fullyProcessedString.split(waitRegex);
     
     const messages = [];
 
-    // 2. 첫 번째 텍스트 (wait: 0)
+    // 3. 첫 번째 텍스트 (wait: 0)
     // parts[0]는 항상 존재 (빈 문자열일 수도 있음)
-    const firstProcessedText = processTags(parts[0], mention);
-    if (firstProcessedText.length > 0) {
-        messages.push({ text: firstProcessedText, wait: 0 });
+    // [변경] 이미 processTags가 실행되었으므로, 여기서는 호출하지 않고 바로 텍스트를 사용합니다.
+    const firstText = parts[0];
+    if (firstText && firstText.length > 0) {
+        messages.push({ text: firstText, wait: 0 });
     }
 
-    // 3. 이후 텍스트 (wait: x)
+    // 4. 이후 텍스트 (wait: x)
     // parts 배열은 [text, waitTime, text, waitTime, ...] 순서가 됨
     for (let i = 1; i < parts.length; i += 2) {
         const waitTime = parseFloat(parts[i]);
         const textContent = parts[i + 1];
 
         if (textContent !== undefined) {
-            const processedText = processTags(textContent, mention);
-            // 텍스트 내용이 있는 경우에만 추가
-            if (processedText.length > 0) {
-                messages.push({ text: processedText, wait: waitTime });
+            // [변경] 이미 processTags가 실행되었으므로, 여기서는 호출하지 않습니다.
+            // 텍스트 내용이 있는 경우(공백 포함)에만 추가
+            if (textContent.length > 0) {
+                messages.push({ text: textContent, wait: waitTime });
             }
         }
     }
