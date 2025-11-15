@@ -44,7 +44,7 @@ async function run({ interaction }) {
                     .save()
                     .then(() => {
                         console.log(`${username}(${userId})님이 '${input}'을(를) '${response}'(이)라고 가르쳤어요.`);
-                        interaction.followUp(`'${input}'은(는) 그렇게 말하면 되는 거군요, 잘 알겠어요!\n-# 답변을 DB에 성공적으로 저장했습니다.`);
+                        interaction.followUp(`'${input}'은(는) 그렇게 말하면 되는 거네요, 잘 알겠어요!\n-# 답변을 DB에 성공적으로 저장했습니다.`);
                     }).catch((e) => {
                         console.log(`${username}(${userId})님이 '${input}'을(를) '${response}'(이)라고 알려준 걸 배우는 과정에서 오류가 발생했어요...`, e);
                         interaction.followUp(`으앙... 알려주신 내용이 머릿속에 들어가지 않아요...\n-# 답변을 DB에 저장하는 도중 문제가 발생했습니다.`);
