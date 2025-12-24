@@ -19,7 +19,7 @@ const client = new Client({
 
 client.on('clientReady', (c) => {
     console.log(`${c.user.tag}가 활동을 시작했어요!`); //누가봐도 봇 시작시 로그
-    /**rest.delete(Routes.applicationCommand('1172826374139039805', 'commandid'))
+    /**rest.delete(Routes.applicationCommand(process.env.BOTID, '1451759601207873708')) //봇 ID, 커맨드 ID
 	.then(() => console.log('Successfully deleted application command'))
 	.catch(console.error);*/
     //이거 슬래시커맨드 잘못 등록했을때 지우는 코드임

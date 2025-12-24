@@ -18,7 +18,7 @@ async function run({ interaction }) {
                     return interaction.followUp('반응할 메시지는 단어로 입력해 주세요.');
                 } */
 
-                if (findmsg.userId !== userId) {
+                if (findmsg.userId !== userId && findmsg.userId !== process.env.ADMINID) {
                     console.log(`${username}(${userId})님이 '${input}'을(를) 잊으라고 했는데, 그건 그 분이 알려주신 게 아니에요.`);
                     return interaction.followUp(`${userMention(userId)}님이 알려주신 게 아니잖아요...?`);
                 }

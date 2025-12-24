@@ -91,7 +91,7 @@ async function run({ interaction }) {
         
         // NSFW 체크 (이전과 동일)
         if (anime.isAdult && !interaction.channel.nsfw) {
-            console.log(`${username}(${userId})님이 ${anime.title.romaji}(을)를 nsfw 채널이 아닌 곳에서 검색했어요... 우으...`);
+            console.log(`${username}(${userId})님이 ${anime.title.romaji}(검색어: ${animeName})(을)를 nsfw 채널이 아닌 곳에서 검색했어요... 우으...`);
             interaction.followUp(`${animeName}...?`);
             await new Promise(resolve => setTimeout(resolve, 700));
             interaction.channel.send('... *(생각 중)*');
@@ -209,7 +209,7 @@ async function run({ interaction }) {
             components: getComponents() 
         });
 
-        console.log(`${username}(${userId})님이 ${anime.title.romaji}(을)를 검색했어요.`);
+        console.log(`${username}(${userId})님이 ${anime.title.romaji}(을)를 검색했어요. (검색어: ${animeName})`);
 
         // 버튼 인터랙션 컬렉터
         const collector = responseMsg.createMessageComponentCollector({ 
