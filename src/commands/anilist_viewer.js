@@ -187,13 +187,13 @@ async function run({ interaction }) {
 
                     new ButtonBuilder()
                         .setCustomId('prev')
-                        .setLabel('⬅️')
+                        .setLabel('⬅️ 이전')
                         .setStyle(ButtonStyle.Secondary)
                         .setDisabled(currentIndex === 0), // 첫 번째면 비활성화
 
                     new ButtonBuilder()
                         .setCustomId('next')
-                        .setLabel('➡️')
+                        .setLabel('➡️ 다음')
                         .setStyle(ButtonStyle.Secondary)
                         .setDisabled(currentIndex === recommendations.length - 1) // 마지막이면 비활성화
                 );

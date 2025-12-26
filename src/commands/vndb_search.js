@@ -94,7 +94,7 @@ async function run({ interaction }) {
         const username = await interaction.user.username;
         let vnTitle = interaction.options.getString('vn_title');
 
-        vnTitle = vnTitle === 'atri' ? 'ATRI -My Dear Moments' : vnTitle;
+        vnTitle = vnTitle === 'atri' ? 'ATRI -My Dear Moments-' : vnTitle;
 
         // --- 1. VN 검색 (VNDB API) ---
         const queryFilters = ["search", "=", vnTitle];
@@ -572,7 +572,7 @@ const data = new SlashCommandBuilder()
     .setDescription('VNDB.org에서 비쥬얼노벨을 검색합니다.')
     .addStringOption(option =>
         option.setName('vn_title')
-            .setDescription('비쥬얼노벨 제목을 입력하세요 (영어/일본어 권장)')
+            .setDescription('비쥬얼노벨 제목을 입력해주세요. (영어/일본어 권장, 일부 약칭 지원)')
             .setRequired(true)
     );
 
