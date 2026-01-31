@@ -61,12 +61,12 @@ client.on('messageCreate', async (message) => {
 new CommandHandler({ //../commands 폴더에 있는 커맨드들 다 등록
     client,
     commandsPath: path.join(__dirname, 'commands'),
-    //eventsPath: path.join(__dirname, 'events'),
+    eventsPath: path.join(__dirname, 'events'),
 });
 
 mongoose.connect(process.env.MONGODB_URI).then(() => { //db연결, 봇 로그인
     client.login(process.env.TOKEN);
-    console.log('connected database');
+    console.log('connected database'); // 이거때문에 지금 봇 실행 시 로깅할 채널 못찾았다고 뜨는 중 (봇 레디보다 이게 먼저라 그럼)
 }); 
 
 module.exports = { client };
