@@ -269,7 +269,7 @@ async function run({ interaction }) {
                     : '정보 없음';
 
                 // 명대사 하나 (Footer 용) - 데이터가 있으면 첫 번째(가장 인기있는) 대사 사용
-                const randomQuote = quotes.length > 0 ? `"${quotes[0].quote}"` : 'VNDB.org';
+                const randomQuote = quotes.length > 0 ? `"${quotes[0].quote}"` : 'vndb.org';
                 footerText = truncate(randomQuote, 2000);
 
                 embed.addFields(
@@ -298,6 +298,8 @@ async function run({ interaction }) {
                 if (validScreenshots.length === 0) {
                     embed.setDescription("표시할 수 있는 이미지가 없습니다.");
                     embed.setImage(null);
+
+                    footerText = `Images of '${vn.title}'`;
                 } else {
                     // 인덱스 안전장치 (필터링으로 인해 길이가 줄어들었을 경우 대비)
                     if (imageIndex >= validScreenshots.length) imageIndex = 0;
@@ -569,7 +571,7 @@ async function run({ interaction }) {
 
 const data = new SlashCommandBuilder()
     .setName('미연시검색')
-    .setDescription('VNDB.org에서 비쥬얼노벨을 검색합니다.')
+    .setDescription('vndb.org에서 비쥬얼노벨을 검색합니다.')
     .addStringOption(option =>
         option.setName('vn_title')
             .setDescription('비쥬얼노벨 제목을 입력해주세요. (영어/일본어 권장, 일부 약칭 지원)')
