@@ -26,6 +26,7 @@ client.on('clientReady', (c) => {
 });
 
 // 메시지 올라온 거 감지
+// ai 채팅을 위해 추후 파일 분리 예정
 client.on('messageCreate', async (message) => {
     if (message.author.id === client.user.id) return;
 
@@ -71,6 +72,6 @@ mongoose.connect(process.env.MONGODB_URI).then(() => { //db연결, 봇 로그인
 
 module.exports = { client };
 
-require('./logger.js');
+require('./logger.js'); // 지금은 임시로 로그를 디코 채널에다 보내지만, 나중에 서버 생기면 파일로 저장한 뒤 주기적으로 빼오는 방식으로 할 듯
 
 // rand(} 따구로 적은거 정수 아니라고 난리치는거 형식 오류라고 출력해주기 <- 큰 문제 아니라서 일단은 넘어감

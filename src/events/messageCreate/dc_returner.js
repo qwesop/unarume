@@ -3,7 +3,10 @@ const { EmbedBuilder } = require('discord.js');
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-// 봇 핸들러 구조상 함수를 직접 내보내야 함
+// 이미지를 다운받은 뒤 어디에 임시로 올리고 그 링크를 보내는 형식이어야 할 듯...?
+// 암만 해도 php에서 이미지를 바로 따오는 방법을 몰루겠음
+// 의도적으로 크롤링으로 자원 소모되는 거 막으려고 한 거 같은데
+
 module.exports = async (message) => {
     // 1. 봇 메시지 무시
     if (message.author.bot) return;
