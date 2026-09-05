@@ -1,5 +1,3 @@
-// 특정 대상(인물)의 메시지만 삭제하는 로직 추가하기
-
 const { SlashCommandBuilder, PermissionFlagsBits, userMention } = require("discord.js");
 
 async function run({ interaction }) {
