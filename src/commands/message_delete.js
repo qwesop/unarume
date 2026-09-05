@@ -59,9 +59,8 @@ async function run({ interaction }) {
                 const deletedMessages = await interaction.channel.bulkDelete(targetMessages, true);
             
                 // 삭제하려고 했던 원본 개수와 실제로 삭제된 개수
-                const targetCount = targetMessages.length;
                 const deletedCount = deletedMessages.size;
-                const skippedCount = targetCount - deletedCount;
+                const skippedCount = number - deletedCount;
 
                 // 결과 안내 메시지 작성
                 let replyContent = 
@@ -81,7 +80,7 @@ async function run({ interaction }) {
 
                 // 삭제하지 못한 14일 경과 메시지가 있다면 안내 문구 추가
                 if (skippedCount > 0) {
-                    replyContent += `\n⚠️ ${skippedCount}개는 메시지 전송 이후 14일이 지나 삭제하지 못했어요...`;
+                    replyContent += `\n-# ⚠️ 그 중 ${skippedCount}개는 메시지 전송 이후 14일이 지났거나, 존재하지 않는 메시지라서 삭제하지 못했어요...`;
                     logContent += ` (그 중 ${skippedCount}개는 삭제에 실패했어요.)`
                 }
 
@@ -114,7 +113,7 @@ const data = new SlashCommandBuilder()
     )
     .addStringOption((option) => option
         .setName('mode')
-        .setDescription('include를 입력한 경우, include(포함)모드와 exclude(제외)모드를 선택할 수 있습니다. (include 미입력 시 해당 옵션은 무시됩니다.)')
+        .setDescription('include에 대해 포함/제외 모드를 설정할 수 있습니다. include 미입력 시 해당 옵션은 무시되며, 해당 옵션 미입력 시 포함모드로 설정됩니다.')
         .setRequired(false)
         .addChoices(
             { name: 'include', value: 'include' },
